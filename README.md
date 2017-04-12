@@ -1,7 +1,7 @@
-# lita-onewheel-apex-bar
+# lita-onewheel-abvpub
 
-[![Build Status](https://travis-ci.org/onewheelskyward/lita-onewheel-abvpub.png?branch=master)](https://travis-ci.org/onewheelskyward/lita-onewheel-abvpub)
-[![Coverage Status](https://coveralls.io/repos/onewheelskyward/lita-onewheel-abvpub/badge.png)](https://coveralls.io/r/onewheelskyward/lita-onewheel-abvpub)
+[![Build Status](https://travis-ci.org/onewheelskyward/lita-onewheel-beer-abvpub.svg?branch=master)](https://travis-ci.org/onewheelskyward/lita-onewheel-beer-abvpub)
+[![Coverage Status](https://coveralls.io/repos/onewheelskyward/lita-onewheel-beer-abvpub/badge.png)](https://coveralls.io/r/onewheelskyward/lita-onewheel-beer-abvpub)
 
 Searches ABVPub's draft list for data and displays it in IRC.
 http://www.abvpub.com/taps/
