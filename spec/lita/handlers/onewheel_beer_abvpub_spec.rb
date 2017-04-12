@@ -23,7 +23,7 @@ describe Lita::Handlers::OnewheelBeerAbvpub, lita_handler: true do
 
   it 'shows the taps' do
     send_command 'abvpub'
-    expect(replies.last).to include('taps: 1) Pinot Gris  2) Apis')
+    expect(replies.last).to include('taps: 1) Persnickety Pinot Gris  2) Nectar Creek Apis')
   end
 
   it 'displays details for tap 4' do

@@ -45,7 +45,7 @@ module Lita
         reply = "Abvpub tap #{tap}) #{get_tap_type_text(datum[:type])}"
         # reply += "#{datum[:brewery]} "
         reply += "#{datum[:name]} "
-        reply += "- #{datum[:desc]}, "
+        reply += "- #{datum[:desc]}, "  if datum[:desc]
         # reply += "Served in a #{datum[1]['glass']} glass.  "
         # reply += "#{datum[:remaining]}"
         reply += "#{datum[:abv]}%"
@@ -93,13 +93,13 @@ module Lita
             abv.sub! /\%/, ''
           end
 
-          ibu_node = /IBU \d+/.match(beer_node.css('span.abvABV').text)
+          ibu_node = /IBU: \d+/.match(beer_node.css('span.abvABV').text)
           if ibu_node
             ibu = ibu_node[0]
             ibu.sub! /IBU /, ''
           end
 
-          full_text_search = "#{brewery} #{beer_name.to_s.gsub /(\d+|')/, ''}"  # #{beer_desc.to_s.gsub /\d+\.*\d*%*/, ''}
+          full_text_search = "#{brewery} #{beer_name.to_s.gsub /(\d+|')/, ''} #{beer_type}"  # #{beer_desc.to_s.gsub /\d+\.*\d*%*/, ''}
 
           # price_node = beer_node.css('td')[1].children.to_s
           # price = (price_node.sub /\$/, '').to_f
@@ -107,7 +107,7 @@ module Lita
           gimme_what_you_got[tap_name] = {
           #     type: tap_type,
           #     remaining: remaining,
-          #     brewery: brewery.to_s,
+              brewery: brewery.to_s,
               name: beer_name.to_s,
               abv: abv.to_f,
               ibu: ibu.to_i,
