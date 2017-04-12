@@ -48,7 +48,10 @@ module Lita
         reply += "- #{datum[:desc]}, "
         # reply += "Served in a #{datum[1]['glass']} glass.  "
         # reply += "#{datum[:remaining]}"
-        reply += "#{datum[:abv]}%, "
+        reply += "#{datum[:abv]}%"
+        if datum[:ibu] > 0
+          reply += ", #{datum[:ibu]}"
+        end
         # reply += "$#{datum[:price].to_s.sub '.0', ''}"
 
         Lita.logger.info "send_response: Replying with #{reply}"
@@ -73,24 +76,24 @@ module Lita
         Lita.logger.debug 'parse_response started.'
         gimme_what_you_got = {}
         noko = Nokogiri.HTML response
-        noko.css('div#tap-list-page div.menus div.menu-item').each_with_index do |beer_node, index|
+        noko.css('li.abvBeerMat').each_with_index do |beer_node, index|
           # gimme_what_you_got
           tap_name = (index + 1).to_s
 
-          brewery = 'Abvpub'
-          beer_name = beer_node.css('.menu-item-title').text.to_s.strip
+          brewery = beer_node.css('span.abvProducerURL').text
+          beer_name = beer_node.css('span.abvBeverageName').text.to_s.strip
 
-          beer_type = beer_node.css('.menu-item-title').children[1].to_s.strip
+          beer_type = beer_node.css('span.abvRateBeer').children[0].to_s.strip
 
-          beer_desc = beer_node.css('.menu-item-description').text
+          beer_desc = ''
 
-          abv_node = /\d+\.\d+\%/.match(beer_node.css('div.menu-item-option').text)
+          abv_node = /\d+\.\d+\%/.match(beer_node.css('span.abvABV').text)
           if abv_node
             abv = abv_node[0]
             abv.sub! /\%/, ''
           end
 
-          ibu_node = /IBU \d+/.match(beer_node.css('div.menu-item-option').text)
+          ibu_node = /IBU \d+/.match(beer_node.css('span.abvABV').text)
           if ibu_node
             ibu = ibu_node[0]
             ibu.sub! /IBU /, ''
